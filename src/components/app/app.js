@@ -11,24 +11,35 @@ class App extends Component {
         super(props);
         this.state = {
             data: [
-                { name: 'Ivan K.', salary: 700, increase: false, id: 1 },
-                { name: 'Elizabeth F.', salary: 1210, increase: true, id: 2 },
-                { name: 'German Q.', salary: 960, increase: false, id: 3 },
+                { name: 'Ivan V.', salary: 1100, increase: false, id: 1 },
+                { name: 'Alex D.', salary: 780, increase: true, id: 2 },
+                { name: 'Elizabeth M.', salary: 960, increase: false, id: 3 }
             ]
         }
+        this.maxId = 4;
     }
 
     deleteItem = (id) => {
         this.setState(({ data }) => {
-            // const index = data.findIndex(elem => elem.id === id);
-            // const before = data.slice(0, index);
-            // const after = data.slice(index + 1);
-            // const newArr = [...before, ...after];
-
             return {
-                data: data.filter(item => item.id !== id) // new filter arr
+                data: data.filter(item => item.id !== id)
             }
         })
+    }
+
+    addItem = (name, salary) => {
+        const newItem = {
+            name,
+            salary,
+            increase: false,
+            id: this.maxId++
+        }
+        this.setState(({ data }) => {
+            const newArr = [...data, newItem];
+            return {
+                data: newArr
+            }
+        });
     }
 
     render() {
@@ -44,10 +55,11 @@ class App extends Component {
                 <EmployeersList
                     data={this.state.data}
                     onDelete={this.deleteItem} />
-                <EmployeesAddForm />
+                <EmployeesAddForm onAdd={this.addItem} />
             </div>
         );
     }
 }
+
 
 export default App;
